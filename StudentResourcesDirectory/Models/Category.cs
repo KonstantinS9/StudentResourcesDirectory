@@ -11,5 +11,8 @@ namespace StudentResourcesDirectory.Models
         [MaxLength(CategoryNameMaxLength)]
         [MinLength(CategoryNameMinLength)]
         public string Name { get; set; } = null!;
+
+        public ICollection<Resource> Resources { get; set; } 
+            = new List<Resource>();
     }
 }

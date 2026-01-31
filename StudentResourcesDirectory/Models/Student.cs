@@ -25,5 +25,8 @@ namespace StudentResourcesDirectory.Models
         public string Email { get; set; } = null!;
 
         public DateTime RegisteredOn { get; set; }
+
+        public ICollection<Resource> Resources { get; set; }
+            = new List<Resource>();
     }
 }

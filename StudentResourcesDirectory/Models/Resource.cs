@@ -1,5 +1,6 @@
 ﻿using StudentResourcesDirectory.Models.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static StudentResourcesDirectory.Common.EntityValidation;
 namespace StudentResourcesDirectory.Models
 {
@@ -26,5 +27,13 @@ namespace StudentResourcesDirectory.Models
         public ResourceType Type { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        [ForeignKey(nameof(Category))]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; } = null!;
+
+        [ForeignKey(nameof(Student))]
+        public int StudentId { get; set; }
+        public Student Student { get; set; } = null!;
     }
 }
