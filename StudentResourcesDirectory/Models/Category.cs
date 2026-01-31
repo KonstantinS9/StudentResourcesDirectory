@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static StudentResourcesDirectory.Common.EntityValidation;
 namespace StudentResourcesDirectory.Models
 {
     public class Category
@@ -8,6 +8,8 @@ namespace StudentResourcesDirectory.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(CategoryNameMaxLength)]
+        [MinLength(CategoryNameMinLength)]
         public string Name { get; set; } = null!;
     }
 }

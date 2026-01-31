@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using static StudentResourcesDirectory.Common.EntityValidation;
 namespace StudentResourcesDirectory.Models
 {
     public class Student
@@ -8,9 +8,13 @@ namespace StudentResourcesDirectory.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(StudentFirstNameMaxLength)]
+        [MinLength(StudentFirstNameMinLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
+        [MaxLength(StudentLastNameMaxLength)]
+        [MinLength(StudentLastNameMinLength)]
         public string LastName { get; set; } = null!;
 
         [Required]
