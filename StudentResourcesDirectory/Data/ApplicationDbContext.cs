@@ -17,7 +17,7 @@ namespace StudentResourcesDirectory.Data
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new ResourceConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
-            builder.ApplyConfiguration(new StudentConfiguration);
+            builder.ApplyConfiguration(new StudentConfiguration());
         }
     }
 }
