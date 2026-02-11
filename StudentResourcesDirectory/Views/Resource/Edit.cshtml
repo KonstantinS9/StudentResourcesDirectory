@@ -1,0 +1,82 @@
+﻿@using StudentResourcesDirectory.Models.Enums
+@using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels
+@model CreateResourceViewModel
+
+@{
+    ViewData["Title"] = "Edit Resource";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-5">
+
+                    <h2 class="fw-bold mb-4 text-center">
+                        Edit Resource
+                    </h2>
+
+                    <form asp-action="Edit" method="post">
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-3">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Url"></label>
+                            <input asp-for="Url" class="form-control" />
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ResourceType"></label>
+                            <select asp-for="ResourceType" class="form-select">
+                                @foreach (var type in Enum.GetValues(typeof(ResourceType)))
+                                {
+                                    <option value="@type">@type</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label>Category</label>
+                            <select asp-for="CategoryId" class="form-select">
+
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value="@category.Id"
+                                            selected="@(category.Id == Model.CategoryId)">
+                                        @category.Name
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

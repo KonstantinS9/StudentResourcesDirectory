@@ -1,0 +1,61 @@
+﻿@using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels
+@model ResourceDetailsViewModel
+
+@{
+    ViewData["Title"] = "Resource Details";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0 resource-details-card">
+
+                <div class="card-body p-5">
+
+                    <h2 class="fw-bold mb-3">@Model.Title</h2>
+
+                    <span class="badge bg-gradient mb-3">
+                        @Model.ResourceType
+                    </span>
+
+                    <p class="text-muted mb-2"><strong>Description:</strong></p>
+                    <p class="mb-4">@Model.Description</p>
+
+                    <p class="text-muted mb-2"><strong>Category:</strong></p>
+                    <p class="mb-3">@Model.Category?.Name</p>
+
+                    <p class="text-muted mb-2"><strong>Added by:</strong></p>
+                    <p class="mb-3">@Model.Student?.FirstName @Model.Student?.LastName</p>
+
+                    <p class="text-muted mb-2"><strong>Created On:</strong></p>
+                    <p class="mb-4">@Model.CreatedOn.ToString("dd MMM yyyy")</p>
+
+                    <div class="d-grid mb-3">
+                        <a href="@Model.Url" target="_blank" class="btn btn-primary btn-lg">
+                            Open Resource
+                        </a>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning w-100">
+                            Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger w-100">
+                            Delete
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary w-100">
+                            Back to Resources
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
