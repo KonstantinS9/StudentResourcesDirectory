@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
+using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels.StudentViewModels;
+using System.Collections;
 
 namespace StudentResourcesDirectory.Controllers
 {
@@ -19,6 +21,15 @@ namespace StudentResourcesDirectory.Controllers
                 .Students
                 .AsNoTracking()
                 .Include(s => s.Resources)
+                .Select(s => new StudentViewModel
+                {
+                    Id = s.Id,
+                    Email = s.Email,
+                    FirstName = s.FirstName,
+                    LastName = s.LastName,
+                    RegisteredOn = s.RegisteredOn,
+                    FacultyNumber = s.FacultyNumber
+                })
                 .ToListAsync();
             
             
