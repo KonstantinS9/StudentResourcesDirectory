@@ -16,9 +16,9 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var resources = _dbContext.Resources
+            var resources = await this._dbContext.Resources
                 .Include(r => r.Category)
                 .Include(r => r.Student)
                 .Select(r => new ResourceViewModel
@@ -31,7 +31,7 @@ namespace StudentResourcesDirectory.Controllers
                     Url = r.Url,
                     ResourceType = r.ResourceType
                 })
-                .ToList();
+                .ToListAsync();
 
             return View(resources);
         }
@@ -39,7 +39,7 @@ namespace StudentResourcesDirectory.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var viewModel = new CreateResourceViewModel
+            var viewModel =  new CreateResourceViewModel
             {
                 Categories = _dbContext.Categories
                     .OrderBy(c => c.Name)
@@ -89,14 +89,14 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id <= 0)
             {
                 return this.BadRequest();
             }
 
-            var resource = _dbContext
+            var resource = await this._dbContext
                 .Resources
                 .AsNoTracking()
                 .Include(r => r.Category)
@@ -112,7 +112,7 @@ namespace StudentResourcesDirectory.Controllers
                     ResourceType = r.ResourceType,
                     CreatedOn = r.CreatedOn,
                 })
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (resource == null)
             {

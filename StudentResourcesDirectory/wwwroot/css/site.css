@@ -149,3 +149,34 @@ body {
         background: #e5e7eb;
         transform: scale(1.05);
     }
+
+.student-card {
+    background: #ffffff;
+    border-radius: 18px;
+    transition: all 0.3s ease;
+    padding: 20px;
+}
+
+    .student-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    }
+
+    .student-card h5 {
+        color: #111827; /* dark text */
+    }
+
+    .student-card p {
+        color: #4b5563; /* gray text */
+    }
+
+    .student-card .btn-outline-primary {
+        border-radius: 30px;
+        transition: all 0.25s ease;
+    }
+
+        .student-card .btn-outline-primary:hover {
+            background: #4338ca;
+            color: white;
+            transform: scale(1.05);
+        }
