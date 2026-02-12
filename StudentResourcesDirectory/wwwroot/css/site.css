@@ -1,7 +1,6 @@
 html {
   font-size: 14px;
 }
-
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -29,3 +28,124 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.shadow-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.section-title {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hover-zoom {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-zoom:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.welcome-section {
+    background-color: royalblue;
+}
+
+.explore-section {
+    background-color: lightblue;
+}
+
+body {
+    background-color: #C0C0C0;
+}
+
+.feature-heading {
+    font-size: 1.8rem;
+    color: #4f46e5;
+    background: linear-gradient(90deg, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-heading {
+    transform: scale(1.05);
+}
+
+
+/* HERO SECTION */
+.welcome-section {
+    background: linear-gradient(135deg, #eef2ff, #fdf4ff); /* light pastel */
+    border-radius: 22px;
+    padding: 45px;
+    text-align: center;
+}
+
+.hero-text {
+    color: #000000; /* black text */
+}
+
+/* EXPLORE SECTION */
+.explore-section {
+    background: #f9fafb; /* light gray */
+    border-radius: 22px;
+    padding: 45px;
+}
+
+/* MAIN SHADOW CARDS */
+.shadow-card {
+    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+/* FEATURE CARDS */
+.feature-card {
+    background: #ffffff;
+    border-radius: 18px;
+    transition: all 0.3s ease;
+}
+
+    .feature-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    }
+
+.section-title {
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: #000000; /* black */
+}
+
+/* GRADIENT HEADINGS INSIDE CARDS */
+.feature-heading {
+    font-size: 1.8rem;
+    color: #4f46e5;
+    background: linear-gradient(90deg, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-heading {
+    transform: scale(1.05);
+}
+
+/* PARAGRAPH TEXT IN CARDS */
+.feature-text {
+    color: #000000; /* black text */
+}
+
+/* BUTTON */
+.hero-btn {
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 30px;
+    transition: all 0.25s ease;
+}
+
+    .hero-btn:hover {
+        background: #e5e7eb;
+        transform: scale(1.05);
+    }

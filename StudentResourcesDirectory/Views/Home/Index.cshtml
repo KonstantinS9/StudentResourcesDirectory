@@ -1,8 +1,74 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- HERO SECTION -->
+<div class="container mt-5 welcome-section shadow-card">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-sm-10 text-center">
+
+            <h1 class="display-4 fw-bold hero-text">
+                🎓 Student Resources Hub
+            </h1>
+
+            <p class="lead hero-text">
+                Share knowledge. Learn faster. Grow together.
+            </p>
+
+            <a asp-controller="Resource"
+               asp-action="Index"
+               class="btn btn-primary btn-lg mt-3 hero-btn">
+                Explore Resources
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- EXPLORE SECTION -->
+<div class="container mt-5 explore-section shadow-card">
+
+    <h2 class="text-center section-title">
+        Explore Knowledge
+    </h2>
+
+    <div class="row mt-4">
+
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4">
+            <div class="feature-card p-4">
+
+                <h3 class="fw-bold feature-heading">📚 Books & PDFs</h3>
+
+                <p class="feature-text mt-3">
+                    Access curated academic books and study materials.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4">
+            <div class="feature-card p-4">
+
+                <h3 class="fw-bold feature-heading">💻 Online Courses</h3>
+
+                <p class="feature-text mt-3">
+                    Learn from structured courses and tutorials.
+                </p>
+
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-12 text-center mb-4">
+            <div class="feature-card p-4">
+
+                <h3 class="fw-bold feature-heading">🎥 Video Lessons</h3>
+
+                <p class="feature-text mt-3">
+                    Watch lectures and practical demonstrations.
+                </p>
+
+            </div>
+        </div>
+
+    </div>
 </div>
