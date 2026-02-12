@@ -1,0 +1,64 @@
+﻿@using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels
+@model IEnumerable<ResourceViewModel>
+
+@{
+    ViewData["Title"] = "Student Resources";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">📚 Resources</h1>
+        <p class="text-muted">Resources uploaded by this student</p>
+        <a asp-controller="Student" asp-action="Index" asp-route-id="@ViewData["StudentId"]" class="btn btn-secondary mt-2">
+            Back to Students
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            No resources found for this student.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+
+            @foreach (var resource in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card resource-card h-100 shadow-sm border-0 p-3">
+
+                        <div class="mb-2">
+                            <span class="badge bg-gradient">
+                                @resource.ResourceType
+                            </span>
+                        </div>
+
+                        <h5 class="fw-bold mb-2">@resource.Title</h5>
+
+                        <p class="small text-secondary mb-1">@resource.Description</p>
+
+                        <p class="small text-secondary mb-2">
+                            📂 @(resource.Category != null ? resource.Category : "No category")
+                        </p>
+
+                        <p class="small text-secondary mb-3">
+                            👤 @resource.Student
+                        </p>
+
+                        <a href="@resource.Url" target="_blank" class="btn btn-outline-primary w-100">
+                            Open Resource
+                        </a>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>

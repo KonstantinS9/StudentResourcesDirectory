@@ -1,4 +1,4 @@
-﻿@using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels.StudentViewModels
+﻿@using StudentResourcesDirectory.Models.ViewModels.StudentViewModels
 @model IEnumerable<StudentViewModel>
 
 @{
@@ -38,7 +38,7 @@
                                 🎓 Faculty Number: @student.FacultyNumber
                             </p>
 
-                            <p class="small text-secondary mb-3">
+                            <p class="small text-secondary mb-1">
                                 📧 Email: @student.Email
                             </p>
 
@@ -46,11 +46,17 @@
                                 🗓 Registered On: @student.RegisteredOn.ToString("dd.MM.yyyy")
                             </p>
 
-                            <div class="mt-auto">
-                                <a asp-controller="Resource"
-                                   asp-action="ByStudent"
+                            <div class="mt-auto d-flex gap-2">
+                                <a asp-action="Details"
+                                   asp-route-id="@student.Id"
+                                   class="btn btn-outline-primary w-50 btn-sm">
+                                    Details
+                                </a>
+
+                                <a asp-controller="Student"
+                                   asp-action="ViewResources"
                                    asp-route-studentId="@student.Id"
-                                   class="btn btn-outline-primary w-100">
+                                   class="btn btn-outline-primary w-50 btn-sm">
                                     View Resources
                                 </a>
                             </div>
@@ -63,5 +69,4 @@
 
         </div>
     }
-
 </div>
