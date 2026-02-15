@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data.Configuration;
-using StudentResourcesDirectory.Models;
+using StudentResourcesDirectory.Data.Models;
 
 namespace StudentResourcesDirectory.Data
 {

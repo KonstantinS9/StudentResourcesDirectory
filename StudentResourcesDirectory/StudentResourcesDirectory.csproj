@@ -17,4 +17,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StudentResourcesDirectory.Data.Models\StudentResourcesDirectory.Data.Models.csproj" />
+    <ProjectReference Include="..\StudentResourcesDirectory.Data\StudentResourcesDirectory.Data.csproj" />
+    <ProjectReference Include="..\StudentResourcesDirectory.GCommon\StudentResourcesDirectory.GCommon.csproj" />
+    <ProjectReference Include="..\StudentResourcesDirectory.ViewModels\StudentResourcesDirectory.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

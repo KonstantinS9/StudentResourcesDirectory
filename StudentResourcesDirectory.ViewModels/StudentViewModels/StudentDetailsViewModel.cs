@@ -1,6 +1,7 @@
-﻿using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels;
+﻿using StudentResourcesDirectory.Data.Models;
+using StudentResourcesDirectory.ViewModels.ResourceViewModels;
 
-namespace StudentResourcesDirectory.Models.ViewModels.StudentViewModels
+namespace StudentResourcesDirectory.ViewModels.StudentViewModels
 {
     public class StudentDetailsViewModel
     {

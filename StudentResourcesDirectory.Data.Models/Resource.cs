@@ -1,8 +1,8 @@
-﻿using StudentResourcesDirectory.Models.Enums;
+﻿using StudentResourcesDirectory.Data.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static StudentResourcesDirectory.Common.EntityValidation;
-namespace StudentResourcesDirectory.Models
+using static StudentResourcesDirectory.GCommon.EntityValidation;
+namespace StudentResourcesDirectory.Data.Models
 {
     public class Resource
     {

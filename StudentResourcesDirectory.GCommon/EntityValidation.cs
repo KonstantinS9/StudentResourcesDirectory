@@ -1,4 +1,4 @@
-﻿namespace StudentResourcesDirectory.Common
+﻿namespace StudentResourcesDirectory.GCommon
 {
     public class EntityValidation
     {

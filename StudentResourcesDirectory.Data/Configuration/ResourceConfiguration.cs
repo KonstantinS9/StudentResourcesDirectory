@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StudentResourcesDirectory.Models;
-using StudentResourcesDirectory.Models.Enums;
+using StudentResourcesDirectory.Data.Models;
+using StudentResourcesDirectory.Data.Models.Enums;
 
 namespace StudentResourcesDirectory.Data.Configuration
 {

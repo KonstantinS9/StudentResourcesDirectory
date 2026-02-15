@@ -1,4 +1,4 @@
-namespace StudentResourcesDirectory.Models
+namespace StudentResourcesDirectory.ViewModels
 {
     public class ErrorViewModel
     {

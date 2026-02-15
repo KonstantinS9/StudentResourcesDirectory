@@ -1,6 +1,6 @@
-﻿using StudentResourcesDirectory.Models.Enums;
-
-namespace StudentResourcesDirectory.Models.ViewModels.ResourceViewModels
+﻿using StudentResourcesDirectory.Data.Models;
+using StudentResourcesDirectory.Data.Models.Enums;
+namespace StudentResourcesDirectory.ViewModels.ResourceViewModels
 {
     public class ResourceDetailsViewModel
     {

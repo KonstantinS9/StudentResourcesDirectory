@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using StudentResourcesDirectory.Models;
+using StudentResourcesDirectory.Data.Models;
 
 namespace StudentResourcesDirectory.Data.Configuration
 {

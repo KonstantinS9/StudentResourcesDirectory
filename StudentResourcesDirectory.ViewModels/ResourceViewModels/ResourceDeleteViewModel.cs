@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudentResourcesDirectory.Models.ViewModels.ResourceViewModels
+namespace StudentResourcesDirectory.ViewModels.ResourceViewModels
 {
     public class ResourceDeleteViewModel
     {

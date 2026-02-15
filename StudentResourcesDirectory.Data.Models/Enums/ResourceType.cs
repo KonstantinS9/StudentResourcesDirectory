@@ -1,4 +1,4 @@
-﻿namespace StudentResourcesDirectory.Models.Enums
+﻿namespace StudentResourcesDirectory.Data.Models.Enums
 {
     public enum ResourceType
     {

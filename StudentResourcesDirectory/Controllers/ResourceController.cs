@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
-using StudentResourcesDirectory.Models;
-using StudentResourcesDirectory.Models.ViewModels.ResourceViewModels;
+using StudentResourcesDirectory.Data.Models;
+using StudentResourcesDirectory.ViewModels.ResourceViewModels;
 
 namespace StudentResourcesDirectory.Controllers
 {

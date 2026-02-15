@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static StudentResourcesDirectory.Common.EntityValidation;
-namespace StudentResourcesDirectory.Models
+using static StudentResourcesDirectory.GCommon.EntityValidation;
+namespace StudentResourcesDirectory.Data.Models
 {
     public class Student
     {

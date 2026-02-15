@@ -1,3 +1,11 @@
 <Solution>
-  <Project Path="StudentResourcesDirectory/StudentResourcesDirectory.csproj" />
+  <Folder Name="/Data/">
+    <Project Path="StudentResourcesDirectory.Data.Models/StudentResourcesDirectory.Data.Models.csproj" Id="dd95c3b4-803e-4db2-bc07-ff7168247709" />
+    <Project Path="StudentResourcesDirectory.Data/StudentResourcesDirectory.Data.csproj" Id="f0beb8fe-14bb-457a-8ae3-dafdc18dd047" />
+  </Folder>
+  <Folder Name="/Web/">
+    <Project Path="StudentResourcesDirectory.ViewModels/StudentResourcesDirectory.ViewModels.csproj" Id="ae6ed657-cddf-46d5-98dc-a9d0da3d86bd" />
+    <Project Path="StudentResourcesDirectory/StudentResourcesDirectory.csproj" />
+  </Folder>
+  <Project Path="StudentResourcesDirectory.GCommon/StudentResourcesDirectory.GCommon.csproj" Id="c33a907e-edd5-47f1-83f1-c6636a6853eb" />
 </Solution>

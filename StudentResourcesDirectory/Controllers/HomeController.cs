@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using StudentResourcesDirectory.Models;
 using System.Diagnostics;
-
+using StudentResourcesDirectory.ViewModels;
 namespace StudentResourcesDirectory.Controllers
 {
     public class HomeController : Controller
