@@ -21,6 +21,7 @@
     <ProjectReference Include="..\StudentResourcesDirectory.Data.Models\StudentResourcesDirectory.Data.Models.csproj" />
     <ProjectReference Include="..\StudentResourcesDirectory.Data\StudentResourcesDirectory.Data.csproj" />
     <ProjectReference Include="..\StudentResourcesDirectory.GCommon\StudentResourcesDirectory.GCommon.csproj" />
+    <ProjectReference Include="..\StudentResourcesDirectory.Services.Core\StudentResourcesDirectory.Services.Core.csproj" />
     <ProjectReference Include="..\StudentResourcesDirectory.ViewModels\StudentResourcesDirectory.ViewModels.csproj" />
   </ItemGroup>
 

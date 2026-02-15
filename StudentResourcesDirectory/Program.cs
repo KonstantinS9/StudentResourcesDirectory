@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
+using StudentResourcesDirectory.Services.Core;
+using StudentResourcesDirectory.Services.Core.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddScoped<IResourceService, ResourceService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
