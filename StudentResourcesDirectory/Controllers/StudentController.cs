@@ -10,12 +10,10 @@ namespace StudentResourcesDirectory.Controllers
 {
     public class StudentController : Controller
     {
-        private ApplicationDbContext _dbContext;
         private IStudentService _studentService;
 
-        public StudentController(ApplicationDbContext dbContext, IStudentService studentService)
+        public StudentController(IStudentService studentService)
         {
-            this._dbContext = dbContext;
             this._studentService = studentService;
         }
 

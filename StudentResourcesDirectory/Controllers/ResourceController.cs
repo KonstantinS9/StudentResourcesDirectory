@@ -10,7 +10,7 @@ namespace StudentResourcesDirectory.Controllers
     {
         private readonly IResourceService _resourceService;
 
-        public ResourceController(ApplicationDbContext dbContext, IResourceService resourceService)
+        public ResourceController(IResourceService resourceService)
         {
             this._resourceService = resourceService;
         }
