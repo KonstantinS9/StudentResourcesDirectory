@@ -37,13 +37,12 @@ Bootstrap 5.3
 
 Structure:
 StudentResourcesDirectory/
-│
-├── Controllers/ # MVC Controllers (ResourceController, StudentController, etc.)
-├── Models/ # Domain models (Student, Resource, Category) and ViewModels
-├── Views/ # Razor Views (.cshtml)
-├── Services/ # Business logic / service layer
-├── Data/ # ApplicationDbContext and EF Core migrations
-├── wwwroot/ # Static files (CSS, JS, images)
-├── Areas/Identity/ # Scaffolded Identity pages (Register, Login)
-├── appsettings.json # App configuration
-└── Program.cs # App entry point and middleware setup
+├── Controllers/        # MVC Controllers (ResourceController, StudentController, etc.)
+├── Models/             # Domain models (Student, Resource, Category) and ViewModels
+├── Views/              # Razor Views (.cshtml)
+├── Services/           # Business logic / service layer
+├── Data/               # ApplicationDbContext and EF Core migrations
+├── wwwroot/            # Static files (CSS, JS, images)
+├── Areas/Identity/     # Scaffolded Identity pages (Register, Login)
+├── appsettings.json    # App configuration
+└── Program.cs          # App entry point and middleware setup
