@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.ResourceViewModels;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace StudentResourcesDirectory.Services.Core
@@ -81,61 +83,80 @@ namespace StudentResourcesDirectory.Services.Core
             return resource;
         }
 
-        public async Task CreateResourceAsync(CreateResourceViewModel viewModel)
+        public async Task CreateResourceAsync(CreateResourceViewModel viewModel, string userId)
         {
-            Resource resource = new Resource()
+            var student = await _dbContext.Students.FirstOrDefaultAsync(s => s.UserId == userId);
+            if (student == null)
+                throw new InvalidOperationException("No student profile found for this user.");
+
+            var resource = new Resource()
             {
                 Title = viewModel.Title,
                 Description = viewModel.Description,
                 Url = viewModel.Url,
-                StudentId = 1,
                 CategoryId = viewModel.CategoryId,
                 ResourceType = viewModel.ResourceType,
-                CreatedOn = DateTime.Now
+                CreatedOn = DateTime.Now,
+                StudentId = student.Id  
             };
 
-            await this._dbContext.Resources.AddAsync(resource);
-            await this._dbContext.SaveChangesAsync();
+            await _dbContext.Resources.AddAsync(resource);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<CreateResourceViewModel> GetEditResourceModelAsync(int id)
+        public async Task<CreateResourceViewModel> GetEditResourceModelAsync(int id, string userId)
         {
-            var resource = await this._dbContext
-                .Resources
+            var resource = await _dbContext.Resources
+                .Include(r => r.Student)
+                .Include(r => r.Category)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
-            CreateResourceViewModel viewModel = new CreateResourceViewModel
+            var categories = await _dbContext.Categories
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+
+            if (resource == null)
+                throw new InvalidOperationException("Resource not found.");
+
+            if (resource.Student.UserId != userId)
+                throw new UnauthorizedAccessException("Not owner.");
+
+            return new CreateResourceViewModel
             {
                 Title = resource.Title,
                 Description = resource.Description,
                 Url = resource.Url,
-                ResourceType = resource.ResourceType,
                 CategoryId = resource.CategoryId,
-                Categories = _dbContext.Categories.OrderBy(c => c.Name).Select(c => new CategoryViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                })
-                .ToList()
+                ResourceType = resource.ResourceType,
+                Categories = categories
             };
-
-            return viewModel;
         }
 
-        public async Task EditResourceAsync(int id, CreateResourceViewModel viewModel)
+        public async Task EditResourceAsync(int id, CreateResourceViewModel model, string userId)
         {
-            var resource = await this._dbContext
-                .Resources
+            var resource = await _dbContext.Resources
+                .Include(r => r.Student)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
-            resource.Title = viewModel.Title;
-            resource.Description = viewModel.Description;
-            resource.Url = viewModel.Url;
-            resource.ResourceType = viewModel.ResourceType;
-            resource.CategoryId = viewModel.CategoryId;
+            if (resource == null)
+                throw new InvalidOperationException("Resource not found.");
 
-            this._dbContext.SaveChanges();
+            if (resource.Student.UserId != userId)
+                throw new UnauthorizedAccessException("Not owner.");
+
+            resource.Title = model.Title;
+            resource.Description = model.Description;
+            resource.Url = model.Url;
+            resource.CategoryId = model.CategoryId;
+            resource.ResourceType = model.ResourceType;
+
+            await _dbContext.SaveChangesAsync();
         }
+
 
         public async Task<ResourceDeleteViewModel> GetDeleteResourceModelAsync(int id)
         {
@@ -150,12 +171,44 @@ namespace StudentResourcesDirectory.Services.Core
             return model;
         }
 
-        public async Task DeleteResourceAsync(int id, ResourceDeleteViewModel viewModel)
+        public async Task DeleteResourceAsync(int id, string userId)
         {
-            var resource = await this._dbContext.Resources.FindAsync(id);
+            var resource = await _dbContext.Resources
+            .Include(r => r.Student)
+            .FirstOrDefaultAsync(r => r.Id == id);
 
-            this._dbContext.Resources.Remove(resource);
-            await  this._dbContext.SaveChangesAsync();
+            if (resource == null)
+                throw new InvalidOperationException("Resource not found.");
+
+            if (resource.Student.UserId != userId)
+                throw new UnauthorizedAccessException("You are not the owner of this resource.");
+
+            _dbContext.Resources.Remove(resource);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsOwnerAsync(int resourceId, string userId)
+        {
+            return await _dbContext.Resources
+                .AnyAsync(r => r.Id == resourceId && r.Student.UserId == userId);
+        }
+
+
+        public async Task<IEnumerable<ResourceViewModel>> GetMyResourcesAsync(string userId)
+        {
+            return await _dbContext.Resources
+                .Where(r => r.Student.UserId == userId)
+                .Select(r => new ResourceViewModel
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Description = r.Description,
+                    Url = r.Url,
+                    Category = r.Category.Name,
+                    Student = r.Student.FirstName + " " + r.Student.LastName,
+                    ResourceType = r.ResourceType
+                })
+                .ToListAsync();
         }
     }
 }

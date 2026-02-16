@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using static StudentResourcesDirectory.GCommon.EntityValidation;
 namespace StudentResourcesDirectory.Data.Models
 {
@@ -25,6 +27,10 @@ namespace StudentResourcesDirectory.Data.Models
         public string Email { get; set; } = null!;
 
         public DateTime RegisteredOn { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public string? UserId { get; set; }
+        public IdentityUser? User { get; set; }
 
         public ICollection<Resource> Resources { get; set; }
             = new List<Resource>();

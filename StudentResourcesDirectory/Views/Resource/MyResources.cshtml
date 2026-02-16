@@ -1,29 +1,24 @@
-﻿@using StudentResourcesDirectory.ViewModels.ResourceViewModels
-@model IEnumerable<ResourceViewModel>
+﻿@model IEnumerable<ResourceViewModel>
 
 @{
-    ViewData["Title"] = "Resources";
-    var currentUserId = ViewData["CurrentUserId"] as string;
+    ViewData["Title"] = "My Resources";
 }
 
 <div class="container mt-4">
 
     <div class="text-center mb-5">
-        <h1 class="fw-bold">📚 Learning Resources</h1>
-        <p class="text-muted">Browse and manage shared student materials</p>
+        <h1 class="fw-bold">📁 My Resources</h1>
+        <p class="text-muted">Resources you have added</p>
 
-        @if (!User.IsInRole("Admin"))
-        {
-            <a asp-action="Create" class="btn btn-success">
-                + Add New Resource
-            </a>
-        }
+        <a asp-action="Create" class="btn btn-success mt-2">
+            + Add New Resource
+        </a>
     </div>
 
     @if (!Model.Any())
     {
         <div class="alert alert-info text-center">
-            No resources found.
+            You haven’t added any resources yet.
         </div>
     }
     else
@@ -34,12 +29,12 @@
             {
                 <div class="col-md-6 col-lg-4">
 
-                    <div class="card resource-card h-100 shadow-sm border-0">
+                    <div class="card h-100 shadow-sm border-0">
 
                         <div class="card-body d-flex flex-column">
 
                             <div class="mb-2">
-                                <span class="badge bg-gradient">
+                                <span class="badge bg-primary">
                                     @resource.ResourceType
                                 </span>
                             </div>
@@ -49,15 +44,11 @@
                             </h5>
 
                             <p class="small text-secondary mb-1">
-                                📂 @resource.Description
-                            </p>
-
-                            <p class="small text-secondary mb-1">
                                 📂 @resource.Category
                             </p>
 
                             <p class="small text-secondary mb-3">
-                                👤 @resource.Student
+                                📝 @resource.Description
                             </p>
 
                             <div class="mt-auto">
@@ -69,36 +60,35 @@
                                 </a>
 
                                 <div class="d-flex gap-1">
-
                                     <a asp-action="Details"
                                            asp-route-id="@resource.Id"
                                            class="btn btn-info w-100 btn-sm">
                                         Details
                                     </a>
 
-                                    @if (resource.StudentId.ToString() == currentUserId)
-                                    {
-                                        <a asp-action="Edit"
-                                               asp-route-id="@resource.Id"
-                                               class="btn btn-warning w-100 btn-sm">
-                                            Edit
-                                        </a>
+                                    <a asp-action="Edit"
+                                           asp-route-id="@resource.Id"
+                                           class="btn btn-warning w-100 btn-sm">
+                                        Edit
+                                    </a>
 
-                                        <a asp-action="Delete"
-                                               asp-route-id="@resource.Id"
-                                               class="btn btn-danger w-100 btn-sm">
-                                            Delete
-                                        </a>
-                                    }
-
+                                    <a asp-action="Delete"
+                                           asp-route-id="@resource.Id"
+                                           class="btn btn-danger w-100 btn-sm">
+                                        Delete
+                                    </a>
                                 </div>
 
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             }
 
         </div>
     }
+
 </div>
+

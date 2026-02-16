@@ -10,10 +10,12 @@ namespace StudentResourcesDirectory.Services.Core.Contracts
         Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync();
         Task<ResourceDetailsViewModel> GetResourceDetailsAsync(int id);
         Task<CreateResourceViewModel> GetCreateResourceModelAsync();
-        Task CreateResourceAsync(CreateResourceViewModel viewModel);
-        Task<CreateResourceViewModel> GetEditResourceModelAsync(int id);
-        Task EditResourceAsync(int id, CreateResourceViewModel viewModel);
+        Task CreateResourceAsync(CreateResourceViewModel viewModel, string userId);
+        Task<CreateResourceViewModel> GetEditResourceModelAsync(int id, string userId);
+        Task EditResourceAsync(int id, CreateResourceViewModel viewModel, string userId);
         Task<ResourceDeleteViewModel> GetDeleteResourceModelAsync(int id);
-        Task DeleteResourceAsync(int id, ResourceDeleteViewModel viewModel);
+        Task DeleteResourceAsync(int id, string userId);
+        Task<bool> IsOwnerAsync(int rsourceId, string userId);
+        Task<IEnumerable<ResourceViewModel>> GetMyResourcesAsync(string userId);
     }
 }

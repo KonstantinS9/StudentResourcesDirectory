@@ -9,6 +9,7 @@ namespace StudentResourcesDirectory.ViewModels.ResourceViewModels
         public string Category { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string Student { get; set; } = null!;
+        public int StudentId { get; set; }
         public string Url { get; set; } = null!;
         public ResourceType ResourceType { get; set; }
     }

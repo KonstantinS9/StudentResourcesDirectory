@@ -1,53 +1,69 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.ResourceViewModels;
+using System.Security.Claims;
 namespace StudentResourcesDirectory.Controllers
 {
     public class ResourceController : Controller
     {
         private readonly IResourceService _resourceService;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ResourceController(IResourceService resourceService)
+        public ResourceController(IResourceService resourceService, UserManager<IdentityUser> userManager)
         {
             this._resourceService = resourceService;
+            this._userManager = userManager;
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var resources = await 
                 this._resourceService.GetAllResourcesOrderedByTitleThenByDateAscAsync();
 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ViewData["CurrentUserId"] = userId;
+
             return this.View(resources);
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Create()
         {
+            if (User.IsInRole("Admin"))
+                return Forbid();
             var viewModel = await _resourceService.GetCreateResourceModelAsync();
 
             return this.View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateResourceViewModel viewModel)
+        [Authorize]
+        public async Task<IActionResult> Create(CreateResourceViewModel model)
         {
             if (!ModelState.IsValid)
-            {
-                viewModel = await this._resourceService.GetCreateResourceModelAsync();
+                return View(model);
 
-                return this.View(viewModel);
-            }
+            if (User.IsInRole("Admin"))
+                return Forbid();
 
-            await _resourceService.CreateResourceAsync(viewModel);
+            var userId = _userManager.GetUserId(User);
 
-            return RedirectToAction(nameof(Index));
+            await _resourceService.CreateResourceAsync(model, userId);
+
+            return RedirectToAction(nameof(MyResources));
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Details(int id)
         {
             if (id <= 0)
@@ -69,73 +85,62 @@ namespace StudentResourcesDirectory.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (id < 0)
-            {
-                return this.BadRequest();
-            }
+            var userId = _userManager.GetUserId(User);
 
-            var viewModel = await _resourceService.GetEditResourceModelAsync(id);
+            var model = await _resourceService.GetEditResourceModelAsync(id, userId);
 
-            if (viewModel == null)
-            {
-                return this.NotFound();
-            }
-
-            return View(viewModel);
+            return View(model);
         }
+
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, CreateResourceViewModel viewModel)
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CreateResourceViewModel model)
         {
-            if (id <= 0)
-            {
-                return this.NotFound();
-            }
-
             if (!ModelState.IsValid)
-            {
-                viewModel = await _resourceService.GetEditResourceModelAsync(id);
+                return View(model);
 
-                return this.View(viewModel);
-            }
+            var userId = _userManager.GetUserId(User);
 
-            await _resourceService.EditResourceAsync(id, viewModel);
+            await _resourceService.EditResourceAsync(id, model, userId);
 
-            return this.RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyResources));
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id < 0)
-            {
-                return this.BadRequest();
-            }
+            var userId = _userManager.GetUserId(User);
 
-            var model = await this._resourceService.GetDeleteResourceModelAsync(id);
+            if (!await _resourceService.IsOwnerAsync(id, userId))
+                return Forbid();
 
-            if (model == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(model);
+            var model = await _resourceService.GetDeleteResourceModelAsync(id);
+            return View(model);
         }
 
-
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, ResourceDeleteViewModel viewModel)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (id <= 0)
-            {
-                return BadRequest();
-            }
+            var userId = _userManager.GetUserId(User);
 
-            await _resourceService.DeleteResourceAsync(id, viewModel);
+            await _resourceService.DeleteResourceAsync(id, userId);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(MyResources));
         }
 
+
+        [Authorize]
+        public async Task<IActionResult> MyResources()
+        {
+            var userId = _userManager.GetUserId(User);
+
+            var model = await _resourceService.GetMyResourcesAsync(userId);
+
+            return View(model);
+        }
     }
 }

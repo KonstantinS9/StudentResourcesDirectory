@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Services.Core.Contracts;
@@ -17,6 +18,8 @@ namespace StudentResourcesDirectory.Controllers
             this._studentService = studentService;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var students = await _studentService
@@ -25,7 +28,8 @@ namespace StudentResourcesDirectory.Controllers
 
             return this.View(students);
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
             if (id <= 0)
@@ -43,6 +47,9 @@ namespace StudentResourcesDirectory.Controllers
 
             return this.View(viewModel);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ViewResources(int studentId)
         {
             var resources = await _studentService.GetStudentResourcesAsync(studentId);
