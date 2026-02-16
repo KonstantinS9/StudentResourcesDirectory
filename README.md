@@ -22,7 +22,7 @@ Open the solution in Visual Studio and press F5, or from the terminal:
 
 cd StudentResourcesDirectory dotnet run
 
-The app will be available at https://localhost: shown in Visual Studio output.
+The app will be available at https://localhost: shown in Visual Studio output. - 7216
 
 🔑 Admin Account
 
