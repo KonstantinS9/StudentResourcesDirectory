@@ -17,5 +17,9 @@
         public const int StudentFirstNameMaxLength = 30;
         public const int StudentLastNameMinLength = 2;
         public const int StudentLastNameMaxLength = 30;
+
+        /* Comment */
+        public const int CommentContentMinLength = 1;
+        public const int CommentContentMaxLength = 1000;
     }
 }

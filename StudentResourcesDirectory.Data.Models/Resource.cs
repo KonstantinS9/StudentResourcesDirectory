@@ -35,5 +35,11 @@ namespace StudentResourcesDirectory.Data.Models
         [ForeignKey(nameof(Student))]
         public int StudentId { get; set; }
         public Student Student { get; set; } = null!;
+
+        public ICollection<Comment> Comments { get; set; } 
+            = new List<Comment>();
+
+        public ICollection<Rating> Ratings { get; set; } = 
+            new List<Rating>();
     }
 }

@@ -10,6 +10,8 @@ namespace StudentResourcesDirectory.Data
         public virtual DbSet<Resource> Resources { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
+        public virtual DbSet<Comment> Comments { get; set; } = null!;
+        public virtual DbSet<Rating> Ratings { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
