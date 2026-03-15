@@ -1,0 +1,31 @@
+﻿@using StudentResourcesDirectory.ViewModels.CommentViewModels
+@model IEnumerable<CommentIndexViewModel>
+
+<div class="comments-section">
+
+    <h4>Comments</h4>
+
+    @if (!Model.Any())
+    {
+        <p>No comments yet.</p>
+    }
+    else
+    {
+        foreach (var comment in Model.OrderByDescending(c => c.CreatedOn))
+        {
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>@comment.User.UserName</strong>
+                    <span class="comment-date">
+                        @comment.CreatedOn.ToString("dd-MM-yyyy")
+                    </span>
+                </div>
+
+                <div class="comment-content">
+                    @comment.Content
+                </div>
+            </div>
+        }
+    }
+
+</div>
