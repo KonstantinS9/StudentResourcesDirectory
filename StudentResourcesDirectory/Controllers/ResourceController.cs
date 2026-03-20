@@ -114,7 +114,7 @@ namespace StudentResourcesDirectory.Controllers
         {
             var userId = _userManager.GetUserId(User);
 
-            if (!await _resourceService.IsOwnerAsync(id, userId))
+            if (!await _resourceService.IsOwnerAsync(id, userId!))
                 return Forbid();
 
             var model = await _resourceService.GetDeleteResourceModelAsync(id);
@@ -127,7 +127,7 @@ namespace StudentResourcesDirectory.Controllers
         {
             var userId = _userManager.GetUserId(User);
 
-            await _resourceService.DeleteResourceAsync(id, userId);
+            await _resourceService.DeleteResourceAsync(id, userId!);
 
             return RedirectToAction(nameof(MyResources));
         }

@@ -1,0 +1,31 @@
+﻿@using StudentResourcesDirectory.ViewModels.CommentViewModels
+@model CommentAddViewModel
+
+<div class="add-comment-section">
+    <h4>Add a Comment</h4>
+
+    <form asp-action="Add" method="post">
+        <input type="hidden" asp-for="ResourceId" />
+
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Write your comment..."
+                      required></textarea>
+
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">
+            Submit
+        </button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

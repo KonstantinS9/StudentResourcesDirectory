@@ -60,7 +60,21 @@
                                 👤 @resource.Student
                             </p>
 
+                            <a asp-area=""
+                            asp-controller="Comment"
+                            asp-action="Add"
+                            asp-route-resourceId ="@resource.Id"
+                                   class="btn btn-outline-primary w-100 mb-2">
+                                   Add Comment
+                            </a>
                             <div class="mt-auto">
+                                <a asp-area="" 
+                                asp-controller="Comment"
+                                asp-action="Index"
+                                asp-route-id="@resource.Id"
+                                    class="btn btn-outline-primary w-100 mb-2">
+                                    View Comments
+                                </a>
 
                                 <a href="@resource.Url"
                                        target="_blank"

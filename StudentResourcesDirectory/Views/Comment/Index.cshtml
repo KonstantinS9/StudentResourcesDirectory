@@ -1,31 +1,74 @@
 ﻿@using StudentResourcesDirectory.ViewModels.CommentViewModels
 @model IEnumerable<CommentIndexViewModel>
 
-<div class="comments-section">
+@{
+    ViewData["Title"] = "Comments";
+}
 
-    <h4>Comments</h4>
+<div class="container mt-5">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">💬 Comments</h2>
+        <p class="text-muted">See what other students think about this resource</p>
+    </div>
 
     @if (!Model.Any())
     {
-        <p>No comments yet.</p>
+        <div class="alert alert-info text-center">
+            No comments yet.
+        </div>
     }
     else
     {
-        foreach (var comment in Model.OrderByDescending(c => c.CreatedOn))
-        {
-            <div class="comment-card">
-                <div class="comment-header">
-                    <strong>@comment.User.UserName</strong>
-                    <span class="comment-date">
-                        @comment.CreatedOn.ToString("dd-MM-yyyy")
-                    </span>
-                </div>
+        <div class="row justify-content-center">
 
-                <div class="comment-content">
-                    @comment.Content
-                </div>
+            <div class="col-lg-8">
+
+                @foreach (var comment in Model)
+                {
+                    <div class="card shadow-sm mb-3 border-0">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between mb-2">
+
+                                <div class="fw-semibold">
+                                    👤 @comment.UserName
+                                </div>
+
+                                <small class="text-muted">
+                                    @comment.CreatedOn.ToString("dd MMM yyyy HH:mm")
+                                </small>
+
+                            </div>
+
+                            <p class="mb-0">
+                                @comment.Content
+                            </p>
+
+                            <a asp-controller="Comment"
+                                   asp-action="Delete"
+                                   asp-route-id="@comment.Id"
+                                   class="btn btn-sm btn-danger">
+                                Delete Comment
+                            </a>
+
+                        </div>
+
+                    </div>
+                }
+
             </div>
-        }
+
+        </div>
     }
+
+    <div class="text-center mt-4">
+        <a asp-controller="Resource"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+            ⬅ Back to Resources
+        </a>
+    </div>
 
 </div>
