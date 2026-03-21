@@ -78,7 +78,10 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
 app.MapStaticAssets();
 
