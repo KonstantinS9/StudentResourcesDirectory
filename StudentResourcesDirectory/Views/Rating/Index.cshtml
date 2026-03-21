@@ -1,0 +1,101 @@
+﻿@using StudentResourcesDirectory.ViewModels.RatingViewModels
+@model IEnumerable<RatingIndexViewModel>
+
+@{
+    ViewData["Title"] = "Ratings";
+}
+
+<div class="container mt-5">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">⭐ Ratings</h2>
+        <p class="text-muted">See how users rated this resource</p>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            No ratings yet.
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+
+                @foreach (var rating in Model)
+                {
+                    <div class="card shadow-sm mb-3 border-0">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+
+                                <div class="fw-semibold">
+                                    👤 @rating.UserName
+                                </div>
+
+                                <small class="text-muted">
+                                    @rating.CreatedOn.ToString("dd MMM yyyy HH:mm")
+                                </small>
+
+                                <a asp-area=""
+                                asp-controller="Rating"
+                                asp-action="Delete"
+                                asp-route-id="@rating.Id"
+                                class="btn btn-sm btn-danger">
+                                Delete Rating
+                                </a>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div class="fs-5 fw-bold">
+
+                                    @if (rating.RatingResource == RatingResource.Bad)
+                                    {
+                                        <span class="text-danger">😞 Bad</span>
+                                    }
+                                    else if (rating.RatingResource == RatingResource.Ok)
+                                    {
+                                        <span class="text-warning">😐 Ok</span>
+                                    }
+                                    else if (rating.RatingResource == RatingResource.Good)
+                                    {
+                                        <span class="text-info">🙂 Good</span>
+                                    }
+                                    else if (rating.RatingResource == RatingResource.Excellent)
+                                    {
+                                        <span class="text-success">😍 Excellent</span>
+                                    }
+
+                                </div>
+
+                                <div>
+                                    @for (int i = 0; i <= (int)rating.RatingResource; i++)
+                                    {
+                                        <span>⭐</span>
+                                    }
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        </div>
+    }
+
+    <div class="text-center mt-4">
+        <a asp-controller="Resource"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+            ⬅ Back to Resources
+        </a>
+    </div>
+
+</div>

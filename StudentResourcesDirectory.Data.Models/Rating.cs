@@ -13,6 +13,8 @@ namespace StudentResourcesDirectory.Data.Models
 
         [Required]
         public RatingResource RatingResource { get; set; }
+        [Required]
+        public DateTime CreatedOn { get; set; }
 
         [ForeignKey(nameof(User))]
         public string UserId { get; set; } = null!;

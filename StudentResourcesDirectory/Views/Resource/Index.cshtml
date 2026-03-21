@@ -76,6 +76,21 @@
                                     View Comments
                                 </a>
 
+                                <a asp-area=""
+                                asp-controller="Rating"
+                                asp-action="Add"
+                                asp-route-id="@resource.Id"
+                                       class="btn btn-outline-primary w-100 mb-2">
+                                   Add Rating
+                                </a>
+                               <a asp-area=""
+                               asp-controller="Rating"
+                               asp-action="Index"
+                               asp-route-id="@resource.Id"
+                                       class="btn btn-outline-primary w-100 mb-2">
+                                   View Ratings
+                               </a>
+
                                 <a href="@resource.Url"
                                        target="_blank"
                                        class="btn btn-outline-primary w-100 mb-2">

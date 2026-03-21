@@ -1,0 +1,88 @@
+﻿@using StudentResourcesDirectory.ViewModels.RatingViewModels
+@model RatingAddViewModel
+
+@{
+    ViewData["Title"] = "Rate Resource";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>⭐ Rate this Resource</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <form asp-action="Add" method="post">
+
+                        <input type="hidden" asp-for="ResourceId" />
+
+                        <div class="mb-4 text-center">
+
+                            <label class="form-label fw-bold">
+                                Select your rating:
+                            </label>
+
+                            <div class="d-flex justify-content-between mt-3">
+
+                                <div>
+                                    <input type="radio" asp-for="RatingResource" value="0" id="bad" />
+                                    <label for="bad" class="text-danger">😞 Bad</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" asp-for="RatingResource" value="1" id="ok" />
+                                    <label for="ok" class="text-warning">😐 Ok</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" asp-for="RatingResource" value="2" id="good" />
+                                    <label for="good" class="text-info">🙂 Good</label>
+                                </div>
+
+                                <div>
+                                    <input type="radio" asp-for="RatingResource" value="3" id="excellent" />
+                                    <label for="excellent" class="text-success">😍 Excellent</label>
+                                </div>
+
+                            </div>
+
+                            <span asp-validation-for="RatingResource" class="text-danger"></span>
+
+                        </div>
+
+                        <div class="text-center">
+
+                            <button type="submit" class="btn btn-success px-4">
+                                Submit Rating
+                            </button>
+
+                            <a asp-controller="Resource"
+                                   asp-action="Index"
+                                   class="btn btn-secondary ms-2">
+                                Cancel
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

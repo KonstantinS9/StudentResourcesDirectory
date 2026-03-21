@@ -1,0 +1,79 @@
+﻿@using StudentResourcesDirectory.ViewModels.RatingViewModels
+@model RatingDeleteViewModel
+
+@{
+    ViewData["Title"] = "Remove Rating";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-danger text-white text-center">
+                    <h4>Remove Rating</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <p class="text-center text-muted mb-4">
+                        Are you sure you want to remove this rating?
+                    </p>
+
+                    <div class="mb-3">
+                        <strong>User:</strong> @Model.UserName
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Date:</strong> @Model.CreatedOn.ToString("dd MMM yyyy HH:mm")
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Rating:</strong>
+
+                        @if (Model.RatingResource == RatingResource.Bad)
+                        {
+                            <span class="text-danger">😞 Bad</span>
+                        }
+                        else if (Model.RatingResource == RatingResource.Ok)
+                        {
+                            <span class="text-warning">😐 Ok</span>
+                        }
+                        else if (Model.RatingResource == RatingResource.Good)
+                        {
+                            <span class="text-info">🙂 Good</span>
+                        }
+                        else if (Model.RatingResource == RatingResource.Excellent)
+                        {
+                            <span class="text-success">😍 Excellent</span>
+                        }
+                    </div>
+
+                    <form asp-action="DeleteConfirmed" method="post">
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a asp-action="Index"
+                                   class="btn btn-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-danger">
+                                Remove
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
