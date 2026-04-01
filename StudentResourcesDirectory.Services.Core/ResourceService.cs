@@ -34,9 +34,10 @@ namespace StudentResourcesDirectory.Services.Core
 
         public async Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync()
         {
-            var resources = await this._dbContext.Resources
+            var resources = await _dbContext.Resources
                 .Include(r => r.Category)
                 .Include(r => r.Student)
+                .ThenInclude(s => s.User)
                 .AsNoTracking()
                 .OrderBy(r => r.Title)
                 .ThenBy(r => r.CreatedOn)
@@ -46,7 +47,8 @@ namespace StudentResourcesDirectory.Services.Core
                     Title = r.Title,
                     Category = r.Category.Name,
                     Description = r.Description,
-                    Student = r.Student.FirstName + " " + r.Student.LastName,
+                    Student = r.Student != null ? r.Student.FirstName + " " + r.Student.LastName : "Unknown",
+                    StudentId = r.Student != null ? r.Student.Id : 0,
                     Url = r.Url,
                     ResourceType = r.ResourceType
                 })

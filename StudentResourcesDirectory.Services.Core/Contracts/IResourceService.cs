@@ -15,7 +15,7 @@ namespace StudentResourcesDirectory.Services.Core.Contracts
         Task EditResourceAsync(int id, CreateResourceViewModel viewModel, string userId);
         Task<ResourceDeleteViewModel> GetDeleteResourceModelAsync(int id);
         Task DeleteResourceAsync(int id, string userId);
-        Task<bool> IsOwnerAsync(int rsourceId, string userId);
+        Task<bool> IsOwnerAsync(int rеsourceId, string userId);
         Task<IEnumerable<ResourceViewModel>> GetMyResourcesAsync(string userId);
     }
 }

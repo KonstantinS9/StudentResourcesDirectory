@@ -138,7 +138,7 @@ namespace StudentResourcesDirectory.Controllers
         {
             var userId = _userManager.GetUserId(User);
 
-            var model = await _resourceService.GetMyResourcesAsync(userId);
+            var model = await _resourceService.GetMyResourcesAsync(userId!);
 
             return View(model);
         }

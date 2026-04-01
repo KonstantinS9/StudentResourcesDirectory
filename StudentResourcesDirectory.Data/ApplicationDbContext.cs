@@ -12,6 +12,7 @@ namespace StudentResourcesDirectory.Data
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<Rating> Ratings { get; set; } = null!;
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder builder)
