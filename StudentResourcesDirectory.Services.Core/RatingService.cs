@@ -4,6 +4,7 @@ using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.RatingViewModels;
+using static StudentResourcesDirectory.GCommon.ExceptionMessages.Rating;
 
 namespace StudentResourcesDirectory.Services.Core
 {
@@ -19,10 +20,10 @@ namespace StudentResourcesDirectory.Services.Core
         public async Task<int> AddRatingAsync(RatingAddViewModel viewModel, int id, string userId)
         {
             if (string.IsNullOrEmpty(userId))
-                throw new ArgumentNullException(nameof(userId));
+                throw new ArgumentNullException(InvalidUserId);
 
             if (await _dbContext.Ratings.AnyAsync(r => r.UserId == userId && r.ResourceId == id))
-                throw new ArgumentException("You gave rating already");
+                throw new ArgumentException(YouGaveRatingAlready);
 
             Rating rating = new Rating()
             {
@@ -45,7 +46,7 @@ namespace StudentResourcesDirectory.Services.Core
                 .FirstOrDefaultAsync(r => r.Id == ratingId && r.UserId == userId);
 
             if (rating == null)
-                throw new ArgumentException("Rating not found");
+                throw new ArgumentException(RatingNotFound);
 
             int resourceId = rating.ResourceId;
 

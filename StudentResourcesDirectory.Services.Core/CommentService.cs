@@ -4,6 +4,7 @@ using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.CommentViewModels;
+using static StudentResourcesDirectory.GCommon.ExceptionMessages.Comment;
 
 namespace StudentResourcesDirectory.Services.Core
 {
@@ -19,7 +20,7 @@ namespace StudentResourcesDirectory.Services.Core
         public async Task AddCommentAsync(CommentAddViewModel viewModel, string userId)
         {
             if (string.IsNullOrEmpty(userId))
-                throw new ArgumentNullException(nameof(userId));
+                throw new ArgumentNullException((InvalidUserId));
 
             Comment comment = new Comment
             {
@@ -39,9 +40,9 @@ namespace StudentResourcesDirectory.Services.Core
                 .FirstOrDefaultAsync(c => c.Id == commentId);
 
             if (comment == null)
-                throw new ArgumentException("Comment not found");
+                throw new ArgumentException(CommentNotFound);
             if (comment.UserId != userId)
-                throw new ArgumentException("You are not the owner of the comment!");
+                throw new ArgumentException(NotOwnerOfComment);
 
             int resourceId = comment.ResourceId;
 

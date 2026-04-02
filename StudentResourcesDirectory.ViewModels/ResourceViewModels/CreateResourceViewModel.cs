@@ -1,7 +1,7 @@
 ﻿using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Data.Models.Enums;
 using System.ComponentModel.DataAnnotations;
-using static StudentResourcesDirectory.GCommon.EntityValidation;
+using static StudentResourcesDirectory.GCommon.EntityValidation.Resource;
 namespace StudentResourcesDirectory.ViewModels.ResourceViewModels
 {
     public class CreateResourceViewModel

@@ -3,7 +3,7 @@ using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.ResourceViewModels;
-
+using static StudentResourcesDirectory.GCommon.ExceptionMessages.Resource;
 namespace StudentResourcesDirectory.Services.Core
 {
     public class ResourceService : IResourceService
@@ -84,7 +84,7 @@ namespace StudentResourcesDirectory.Services.Core
         {
             var student = await _dbContext.Students.FirstOrDefaultAsync(s => s.UserId == userId);
             if (student == null)
-                throw new InvalidOperationException("No student profile found for this user.");
+                throw new InvalidOperationException(string.Format(InvalidStudentIdForCreatingResource, userId));
 
             var resource = new Resource()
             {
@@ -117,10 +117,10 @@ namespace StudentResourcesDirectory.Services.Core
                 .ToListAsync();
 
             if (resource == null)
-                throw new InvalidOperationException("Resource not found.");
+                throw new InvalidOperationException(ResourceNotFound);
 
             if (resource.Student.UserId != userId)
-                throw new UnauthorizedAccessException("Not owner.");
+                throw new UnauthorizedAccessException(NotOwnerOfResource);
 
             return new CreateResourceViewModel
             {
@@ -140,10 +140,10 @@ namespace StudentResourcesDirectory.Services.Core
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             if (resource == null)
-                throw new InvalidOperationException("Resource not found.");
+                throw new InvalidOperationException(ResourceNotFound);
 
             if (resource.Student.UserId != userId)
-                throw new UnauthorizedAccessException("Not owner.");
+                throw new UnauthorizedAccessException(NotOwnerOfResource);
 
             resource.Title = model.Title;
             resource.Description = model.Description;
@@ -175,10 +175,10 @@ namespace StudentResourcesDirectory.Services.Core
             .FirstOrDefaultAsync(r => r.Id == id);
 
             if (resource == null)
-                throw new InvalidOperationException("Resource not found.");
+                throw new InvalidOperationException(ResourceNotFound);
 
             if (resource.Student.UserId != userId)
-                throw new UnauthorizedAccessException("You are not the owner of this resource.");
+                throw new UnauthorizedAccessException(NotOwnerOfResource);
 
             _dbContext.Resources.Remove(resource);
             await _dbContext.SaveChangesAsync();

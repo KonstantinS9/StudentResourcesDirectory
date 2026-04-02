@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StudentResourcesDirectory.Data;
+using StudentResourcesDirectory.Data.Configuration;
 using StudentResourcesDirectory.Services.Core;
 using StudentResourcesDirectory.Services.Core.Contracts;
+using static StudentResourcesDirectory.GCommon.ApplicationsConstants.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,33 +23,29 @@ builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
-
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 8;
 })
-             .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var services = scope.ServiceProvider;
+    DatabaseRoleSeeder.SeedRoles(services);
 
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 
-    if (!await roleManager.RoleExistsAsync("Admin"))
-    {
-        await roleManager.CreateAsync(new IdentityRole("Admin"));
-    }
-
-
-    string adminEmail = "konstantin@admin.com";
-    string adminPassword = "AdminRole1234";
+    string adminEmail = AdminUserEmail;
+    string adminPassword = AdminUserPassword;
 
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)

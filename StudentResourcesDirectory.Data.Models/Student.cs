@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static StudentResourcesDirectory.GCommon.EntityValidation;
+using static StudentResourcesDirectory.GCommon.EntityValidation.Student;
 namespace StudentResourcesDirectory.Data.Models
 {
     public class Student

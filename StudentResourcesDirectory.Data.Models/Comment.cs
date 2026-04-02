@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static StudentResourcesDirectory.GCommon.EntityValidation;
+using static StudentResourcesDirectory.GCommon.EntityValidation.Comment;
 namespace StudentResourcesDirectory.Data.Models
 {
     public class Comment

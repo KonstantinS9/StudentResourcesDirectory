@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static StudentResourcesDirectory.GCommon.EntityValidation;
+using static StudentResourcesDirectory.GCommon.EntityValidation.Category;
 namespace StudentResourcesDirectory.Data.Models
 {
     public class Category
