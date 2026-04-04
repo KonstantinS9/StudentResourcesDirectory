@@ -32,7 +32,7 @@ namespace StudentResourcesDirectory.Services.Core
             return viewModel;
         }
 
-        public async Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync()
+        public async Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync(string? searchQuery = null)
         {
             var resources = await _dbContext.Resources
                 .Include(r => r.Category)
@@ -53,6 +53,12 @@ namespace StudentResourcesDirectory.Services.Core
                     ResourceType = r.ResourceType
                 })
                 .ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+                resources = resources.Where(r => r.Title.ToLower().Contains(searchQuery)).ToList();
+            }
 
             return resources;
         }

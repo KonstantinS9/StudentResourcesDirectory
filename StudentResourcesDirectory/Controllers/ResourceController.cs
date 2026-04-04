@@ -22,14 +22,15 @@ namespace StudentResourcesDirectory.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchQuery = null)
         {
             var resources = await 
-                this._resourceService.GetAllResourcesOrderedByTitleThenByDateAscAsync();
+                this._resourceService.GetAllResourcesOrderedByTitleThenByDateAscAsync(searchQuery);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             ViewData["CurrentUserId"] = userId;
+            ViewData["SearchQuery"] = searchQuery;
 
             return this.View(resources);
         }

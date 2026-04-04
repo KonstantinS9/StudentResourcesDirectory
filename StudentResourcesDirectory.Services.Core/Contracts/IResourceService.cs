@@ -7,7 +7,7 @@ namespace StudentResourcesDirectory.Services.Core.Contracts
 {
     public interface IResourceService
     {
-        Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync();
+        Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync(string? searchQuery = null);
         Task<ResourceDetailsViewModel> GetResourceDetailsAsync(int id);
         Task<CreateResourceViewModel> GetCreateResourceModelAsync();
         Task CreateResourceAsync(CreateResourceViewModel viewModel, string userId);

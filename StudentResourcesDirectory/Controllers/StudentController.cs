@@ -20,11 +20,12 @@ namespace StudentResourcesDirectory.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? searchQuery = null)
         {
             var students = await _studentService
-                .GetAllStudentsOrderedByFirstNameAscAsync();
+                .GetAllStudentsOrderedByFirstNameAscAsync(searchQuery);
 
+            ViewData["SearchQuery"] = searchQuery;
 
             return this.View(students);
         }

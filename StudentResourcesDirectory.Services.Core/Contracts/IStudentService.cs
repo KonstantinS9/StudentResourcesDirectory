@@ -8,7 +8,7 @@ namespace StudentResourcesDirectory.Services.Core.Contracts
 {
     public interface IStudentService
     {
-        Task<IEnumerable<StudentViewModel>> GetAllStudentsOrderedByFirstNameAscAsync();
+        Task<IEnumerable<StudentViewModel>> GetAllStudentsOrderedByFirstNameAscAsync(string? searchQuery = null);
         Task<StudentDetailsViewModel> GetStudentDetailsAsync(int id);
         Task<IEnumerable<ResourceViewModel>> GetStudentResourcesAsync(int studentId);
     }

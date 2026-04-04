@@ -18,7 +18,7 @@ namespace StudentResourcesDirectory.Services.Core
             this._dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<StudentViewModel>> GetAllStudentsOrderedByFirstNameAscAsync()
+        public async Task<IEnumerable<StudentViewModel>> GetAllStudentsOrderedByFirstNameAscAsync(string? searchQuery = null)
         {
             var students = await this._dbContext
                 .Students
@@ -35,6 +35,12 @@ namespace StudentResourcesDirectory.Services.Core
                     FacultyNumber = s.FacultyNumber
                 })
                 .ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+                students = students.Where(s => s.FirstName.ToLower().Contains(searchQuery)).ToList();
+            }
 
             return students;
         }
