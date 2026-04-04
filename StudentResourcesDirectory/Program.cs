@@ -19,6 +19,8 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IStudentManagementService, StudentManagementService>();
+builder.Services.AddScoped<IResourceManagementService, ResourceManagementService>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
@@ -83,6 +85,24 @@ app.UseAuthorization();
 app.UseStatusCodePagesWithRedirects("/Home/Error/{0}");
 
 app.MapStaticAssets();
+
+app.Use((context, next) =>
+{
+    if (context.User.Identity!.IsAuthenticated == true && context.Request.Path == "/")
+    {
+        if (context.User.IsInRole("Admin"))
+        {
+            context.Response.Redirect("/Admin/Home/Index");
+            return Task.CompletedTask;
+        }
+    }
+    return next();
+});
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
     name: "default",

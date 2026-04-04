@@ -23,5 +23,10 @@ namespace StudentResourcesDirectory.GCommon
             public const string RatingNotFound = "Rating not found.";
             public const string YouGaveRatingAlready = "You gave rating already.";
         }
+
+        public static class Student
+        {
+            public const string StudentNotFound = "Student not found.";
+        }
     }
 }

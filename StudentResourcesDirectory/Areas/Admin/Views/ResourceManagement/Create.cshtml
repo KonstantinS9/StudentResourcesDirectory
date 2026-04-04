@@ -1,0 +1,68 @@
+﻿@using StudentResourcesDirectory.Data.Models.Enums
+@using StudentResourcesDirectory.ViewModels.AdminViewModels.ResourceManagementViewModels
+@model ResourceManagementViewModel
+
+@{
+    ViewData["Title"] = "Create Resource";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-warning fw-bold">Create Resource</h1>
+
+    <div class="card bg-dark text-white shadow-lg rounded-3 mx-auto p-4" style="max-width: 600px;">
+        <form asp-action="Create" method="post">
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label fw-bold"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Url" class="form-label fw-bold"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ResourceType" class="form-label fw-bold"></label>
+                <select asp-for="ResourceType" class="form-select"
+                        asp-items="Html.GetEnumSelectList<ResourceType>()">
+                </select>
+                <span asp-validation-for="ResourceType" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label fw-bold"></label>
+                <select asp-for="CategoryId" class="form-select" asp-items="Model.Categories">
+                    <option value=""></option>
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-secondary fw-bold">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+
+                <button type="submit" class="btn btn-success fw-bold">
+                    <i class="bi bi-check-circle"></i> Create
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #1c1c1c;
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">

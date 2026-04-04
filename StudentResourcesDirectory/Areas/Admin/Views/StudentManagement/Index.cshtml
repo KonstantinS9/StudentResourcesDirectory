@@ -1,0 +1,82 @@
+﻿@using StudentResourcesDirectory.ViewModels.AdminViewModels.StudentManagementViewModels
+@model IEnumerable<StudentManagementViewModel>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4 text-warning fw-bold">Student Management</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary fw-bold">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover shadow-lg rounded-3">
+            <thead class="thead-dark">
+                <tr class="text-warning text-center">
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td class="align-middle">@student.Email</td>
+
+                        <td class="align-middle">
+                            @foreach (var role in student.Roles)
+                            {
+                                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill">@role</span>
+                            }
+                        </td>
+
+                        <td class="text-center align-middle">
+                            <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+
+                                @if (student.Roles == null || !student.Roles.Any(r => r.Equals("Admin", StringComparison.OrdinalIgnoreCase)))
+                                {
+                                    <select id="roleDropdown-@student.Id" class="form-select form-select-sm w-auto me-2">
+                                        <option value="User" selected="@(student.Roles.Contains("User") ? "selected" : null)">User</option>
+                                        <option value="Admin" selected="@(student.Roles.Contains("Admin") ? "selected" : null)">Admin</option>
+                                    </select>
+
+                                    <form method="post" asp-action="AssignRole" asp-controller="StudentManagement" asp-area="Admin" class="d-inline">
+                                        <input type="hidden" name="studentId" value="@student.Id" />
+                                        <input type="hidden" name="role" id="assignRoleInput-@student.Id" />
+                                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-3 py-2"
+                                                onclick="setRoleValue('@student.Id', 'assignRoleInput')">
+                                            <i class="bi bi-person-plus-fill"></i> Assign
+                                        </button>
+                                    </form>
+
+                                    <form method="get" asp-action="Delete" asp-controller="StudentManagement" asp-area="Admin", asp-route-id = "@student.Id" class="d-inline">
+                                        <input type="hidden" name="studentId" value="@student.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm fw-bold px-3 py-2">
+                                            <i class="bi bi-trash-fill"></i> Delete
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="text-light fw-bold">Cannot edit Admin</span>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function setRoleValue(id, prefix) {
+        const dropdown = document.getElementById(`roleDropdown-${id}`);
+        const input = document.getElementById(`${prefix}-${id}`);
+        input.value = dropdown.value;
+    }
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">

@@ -12,12 +12,9 @@
         <h1 class="fw-bold">📚 Learning Resources</h1>
         <p class="text-muted">Browse and manage shared student materials</p>
 
-        @if (!User.IsInRole("Admin"))
-        {
             <a asp-action="Create" class="btn btn-success">
                 + Add New Resource
             </a>
-        }
     </div>
 
     @if (!Model.Any())

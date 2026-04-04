@@ -38,8 +38,6 @@ namespace StudentResourcesDirectory.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            if (User.IsInRole("Admin"))
-                return Forbid();
             var viewModel = await _resourceService.GetCreateResourceModelAsync();
 
             return this.View(viewModel);
