@@ -15,11 +15,19 @@ namespace StudentResourcesDirectory.Controllers
             this._userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string? searchQuery = null, 
+            string? resourceType = null,
+            string? category = null)
         {
             var userId = _userManager.GetUserId(User)!;
 
-            var resources = await _favoriteService.GetFavoriteResourcesAsync(userId);
+            var resources = await _favoriteService.GetFavoriteResourcesAsync(userId, searchQuery, resourceType, category);
+
+            ViewData["SearchQuery"] = searchQuery;
+            ViewData["ResourceType"] = resourceType;
+            ViewData["Category"] = category;
+
             return View(resources);
         }
 

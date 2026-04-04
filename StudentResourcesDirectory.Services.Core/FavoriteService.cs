@@ -3,6 +3,7 @@ using StudentResourcesDirectory.Data;
 using StudentResourcesDirectory.Data.Models;
 using StudentResourcesDirectory.Services.Core.Contracts;
 using StudentResourcesDirectory.ViewModels.ResourceViewModels;
+using System.Runtime.CompilerServices;
 
 namespace StudentResourcesDirectory.Services.Core
 {
@@ -34,15 +35,19 @@ namespace StudentResourcesDirectory.Services.Core
             await _dbContext.Favorites.AddAsync(favorite);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<IEnumerable<ResourceViewModel>> GetFavoriteResourcesAsync(string userId)
+        public async Task<IEnumerable<ResourceViewModel>> GetFavoriteResourcesAsync(
+            string userId,
+            string? searchQuery = null,
+            string? resourceType = null,
+            string? category = null)
         {
-            return await _dbContext.Favorites
+            var favorites = await _dbContext.Favorites
                 .Where(f => f.UserId == userId)
                 .Include(f => f.Resource)
-                .ThenInclude(r => r.Category) 
+                .ThenInclude(r => r.Category)
                 .Include(f => f.Resource)
                 .ThenInclude(r => r.Student)
-                .ThenInclude(s => s.User) 
+                .ThenInclude(s => s.User)
                 .Select(f => new ResourceViewModel
                 {
                     Id = f.Resource.Id,
@@ -53,7 +58,27 @@ namespace StudentResourcesDirectory.Services.Core
                     ResourceType = f.Resource.ResourceType,
                     Student = f.Resource!.Student!.User!.UserName!
                 })
-                .ToArrayAsync();
+                .ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+                favorites = favorites.Where(f => f.Title.ToLower().Contains(searchQuery)).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(resourceType))
+            {
+                resourceType = resourceType.ToLower().Trim();
+                favorites = favorites.Where(f => f.ResourceType.ToString().ToLower() == resourceType).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                category = category.ToLower().Trim();
+                favorites = favorites.Where(f => f.Category.ToLower() == category).ToList();
+            }
+
+            return favorites; 
         }
 
         public async Task RemoveResourceFromFavorites(int resourceId, string userId)

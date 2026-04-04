@@ -22,15 +22,24 @@ namespace StudentResourcesDirectory.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Index(string? searchQuery = null)
+        public async Task<IActionResult> Index(
+        string? searchQuery = null,
+        string? resourceType = null,
+        string? category = null,
+        int pageNumber = 1)
         {
-            var resources = await 
-                this._resourceService.GetAllResourcesOrderedByTitleThenByDateAscAsync(searchQuery);
+            var (resources, totalPages) =
+                await this._resourceService.GetAllResourcesOrderedByTitleThenByDateAscAsync(
+                    searchQuery, resourceType, category, pageNumber);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             ViewData["CurrentUserId"] = userId;
             ViewData["SearchQuery"] = searchQuery;
+            ViewData["ResourceType"] = resourceType;
+            ViewData["Category"] = category;
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
 
             return this.View(resources);
         }
@@ -133,11 +142,17 @@ namespace StudentResourcesDirectory.Controllers
 
 
         [Authorize]
-        public async Task<IActionResult> MyResources()
+        public async Task<IActionResult> MyResources(
+            string? searchQuery = null, 
+            string? resourceType = null,
+            string? category = null)
         {
             var userId = _userManager.GetUserId(User);
 
-            var model = await _resourceService.GetMyResourcesAsync(userId!);
+            var model = await _resourceService.GetMyResourcesAsync(userId!, searchQuery, resourceType, category);
+            ViewData["SearchQuery"] = searchQuery;
+            ViewData["ResourceType"] = resourceType;
+            ViewData["Category"] = category;
 
             return View(model);
         }

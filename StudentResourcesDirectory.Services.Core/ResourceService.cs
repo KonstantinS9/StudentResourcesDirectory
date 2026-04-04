@@ -32,7 +32,11 @@ namespace StudentResourcesDirectory.Services.Core
             return viewModel;
         }
 
-        public async Task<IEnumerable<ResourceViewModel>> GetAllResourcesOrderedByTitleThenByDateAscAsync(string? searchQuery = null)
+        public async Task<(IEnumerable<ResourceViewModel>, int TotalPages)> GetAllResourcesOrderedByTitleThenByDateAscAsync(
+            string? searchQuery = null,
+            string? resourceType = null,
+            string? category = null,
+            int pageNumber = 1, int pageSize = 3)
         {
             var resources = await _dbContext.Resources
                 .Include(r => r.Category)
@@ -60,7 +64,27 @@ namespace StudentResourcesDirectory.Services.Core
                 resources = resources.Where(r => r.Title.ToLower().Contains(searchQuery)).ToList();
             }
 
-            return resources;
+            if (!string.IsNullOrWhiteSpace(resourceType))
+            {
+                resourceType = resourceType.ToLower().Trim();
+                resources = resources.Where(r => r.ResourceType.ToString().ToLower() == resourceType).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                category = category.ToLower().Trim();
+                resources = resources.Where(r => r.Category.ToLower() == category).ToList();
+            }
+
+            int totalResources = resources.Count;
+            int totalPages = (int)Math.Ceiling(totalResources / (double)pageSize);
+
+            resources = resources
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return (resources, totalPages);
         }
 
         public async Task<ResourceDetailsViewModel> GetResourceDetailsAsync(int id)
@@ -197,9 +221,13 @@ namespace StudentResourcesDirectory.Services.Core
         }
 
 
-        public async Task<IEnumerable<ResourceViewModel>> GetMyResourcesAsync(string userId)
+        public async Task<IEnumerable<ResourceViewModel>> GetMyResourcesAsync(
+            string userId,
+            string? searchQuery = null,
+            string? resourceType = null,
+            string? category = null)
         {
-            return await _dbContext.Resources
+            var resources = await _dbContext.Resources
                 .Where(r => r.Student.UserId == userId)
                 .Select(r => new ResourceViewModel
                 {
@@ -212,6 +240,26 @@ namespace StudentResourcesDirectory.Services.Core
                     ResourceType = r.ResourceType
                 })
                 .ToListAsync();
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.ToLower().Trim();
+                resources = resources.Where(r => r.Title.ToLower().Contains(searchQuery)).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(resourceType))
+            {
+                resourceType = resourceType.ToLower().Trim();
+                resources = resources.Where(r => r.ResourceType.ToString().ToLower() == resourceType).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                category = category.ToLower().Trim();
+                resources = resources.Where(r => r.Category.ToLower() == category).ToList();
+            }
+
+            return resources;
         }
     }
 }
