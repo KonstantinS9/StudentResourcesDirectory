@@ -6,6 +6,9 @@
   <Folder Name="/Services/">
     <Project Path="StudentResourcesDirectory.Services.Core/StudentResourcesDirectory.Services.Core.csproj" Id="7aa683fa-2ad6-4803-90cc-85132b7d5e67" />
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="StudentResourcesDirectory.Services.Tests/StudentResourcesDirectory.Services.Tests.csproj" Id="47aff195-8df0-4625-af24-fc6576735350" />
+  </Folder>
   <Folder Name="/Web/">
     <Project Path="StudentResourcesDirectory.ViewModels/StudentResourcesDirectory.ViewModels.csproj" Id="ae6ed657-cddf-46d5-98dc-a9d0da3d86bd" />
     <Project Path="StudentResourcesDirectory/StudentResourcesDirectory.csproj" />
