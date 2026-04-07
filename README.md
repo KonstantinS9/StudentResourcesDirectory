@@ -1,73 +1,222 @@
-🚀 StudentResourcesDirectory
+# Student Resources Directory
 
-A web application for managing and sharing student resources. Students can browse, add, and manage their own resources. Admins can manage users but cannot add resources.
+## 📌 Overview
 
-.NET Version: 10.0 ASP.NET Core: 10.0 License: Apache-2.0
+**Student Resources Directory** is an ASP.NET MVC web application designed to manage and organize educational resources for students. The platform allows users to browse, rate, comment, and manage different types of resources in a structured and user-friendly way.
 
-🔧 Requirements
+---
 
-.NET 10 SDK
+## 🚀 Features
 
-Visual Studio 2026
+* 📚 Resource management (create, edit, delete)
+* ⭐ Rating system for resources
+* 💬 Comment system
+* ❤️ Favorite resources
+* 👤 Student management
+* 🔍 Filtering resources by criteria
+* 📄 Pagination for efficient data browsing
+* 🔐 Authentication & Authorization (ASP.NET Identity)
+* 🛠 Admin area for content management
+* ✅ Unit testing for services
 
-SQL Server installed locally (e.g., SQL Server Express or LocalDB)
+---
 
-🚀 How to Run
+## 👥 User Roles
 
-Start the database
-Make sure the SQL Server service is running. You can start it via SQL Server Management Studio or Services.msc. No Docker is needed. Ensure the connection string in appsettings.json matches your local setup.
+The application supports role-based access control:
 
-Run the application
-Open the solution in Visual Studio and press F5, or from the terminal:
+* **Admin**
 
-cd StudentResourcesDirectory dotnet run
+  * Full access to the system
+  * Manage resources, users
+  * Access to Admin Area
 
-The app will be available at https://localhost: shown in Visual Studio output. - 7216
+* **User**
 
-🔑 Admin Account
+  * Create and browse resources
+  * Add comments and ratings
+  * Add resources to favorites
 
-Email: konstantin@admin.com
+---
 
-Password: AdminRole1234
+## 🔐 Security
 
-🛠️ Tech Stack
+The application follows best practices for web security:
 
-ASP.NET Core 10 MVC – Web framework
+* ASP.NET Core Identity with User and Admin roles
+* Role-based authorization via attributes and area-based access control
+* Antiforgery tokens applied globally
+* Client-side and server-side validation
+* No raw SQL — EF Core LINQ queries only
+* Custom error pages for **404 Not Found**, **500 Server Error** and **400 Bad Request**
 
-Entity Framework Core 10.0.2 – ORM / Database access
+---
 
-SQL Server 21 – Database
+## 🏗 Architecture
 
-ASP.NET Core Identity – Authentication & authorization
+The project follows a layered architecture with clear separation of concerns:
 
-Bootstrap 5.3 – Frontend styling
+### 🔹 Data Layer
 
-Razor Views – Server-side HTML rendering
-| Technology            | Version  | Purpose                          |
-|-----------------------|----------|----------------------------------|
-| ASP.NET Core MVC      | 10.0     | Web framework                    |
-| Entity Framework Core | 10.0.2      | ORM / Database access            |
-| SQL Server            | 21       | Database                         |
-| Bootstrap             | 5.3      | Frontend styling                 |
-| Razor Views           | -        | Server-side HTML rendering 
+* `StudentResourcesDirectory.Data`
+* `StudentResourcesDirectory.Data.Models`
 
-Structure:
-StudentResourcesDirectory/
+Handles database access and entity models.
 
-├── Controllers/        # MVC Controllers (ResourceController, StudentController, etc.)
+---
 
-├── Models/             # Domain models (Student, Resource, Category) and ViewModels
+### 🔹 Services Layer
 
-├── Views/              # Razor Views (.cshtml)
+* `StudentResourcesDirectory.Services.Core`
 
-├── Services/           # Business logic / service layer
+Contains business logic and core application services.
 
-├── Data/               # ApplicationDbContext and EF Core migrations
+---
 
-├── wwwroot/            # Static files (CSS, JS, images)
+### 🔹 Web Layer (MVC)
 
-├── Areas/Identity/     # Scaffolded Identity pages (Register, Login)
+* `StudentResourcesDirectory`
 
-├── appsettings.json    # App configuration
+  * Controllers
+  * Views
+  * Areas (Admin)
+  * Identity
+  * wwwroot
 
-└── Program.cs          # App entry point and middleware setup
+Handles UI, routing, and user interaction.
+
+---
+
+### 🔹 ViewModels
+
+* `StudentResourcesDirectory.ViewModels`
+
+  * AdminViewModels
+  * CommentViewModels
+  * RatingViewModels
+  * ResourceViewModels
+  * StudentViewModels
+
+Used for data transfer between controllers and views.
+
+---
+
+### 🔹 Common
+
+* `StudentResourcesDirectory.GCommon`
+
+  * ApplicationConstants
+  * EntityValidation
+  * ExceptionMessages
+
+Shared utilities and constants.
+
+---
+
+### 🔹 Tests
+
+* `StudentResourcesDirectory.Services.Tests`
+
+Includes unit tests for:
+
+* CommentService
+* FavoriteService
+* RatingService
+* ResourceService
+* StudentService
+* ResourceManagementService
+
+---
+
+## ⚙️ Technologies Used
+
+* ASP.NET Core MVC
+* Entity Framework Core
+* ASP.NET Identity
+* NUnit
+
+---
+
+## ▶️ Getting Started
+
+### Prerequisites
+
+* .NET SDK (6 or later recommended)
+* Visual Studio / VS Code
+* SQL Server (or configured database)
+
+---
+
+### Installation
+
+```bash id="c8yw36"
+git clone https://github.com/your-username/StudentResourcesDirectory.git
+cd StudentResourcesDirectory
+```
+
+```bash id="gn9i0k"
+dotnet restore
+dotnet build
+dotnet run
+```
+
+---
+
+## 🔐 Default Admin Account
+
+The application comes with a preconfigured administrator account:
+
+* **Email:** [konstantin@admin.com](mailto:konstantin@admin.com)
+* **Password:** AdminRole1234
+
+
+---
+
+## 🔐 Admin Area
+
+The application includes an **Admin panel** located at:
+
+```id="qgm4h6"
+/Admin
+```
+
+Used for managing resources and users.
+
+---
+
+## 🧪 Running Tests
+
+```bash id="s0yqhp"
+dotnet test
+```
+
+---
+
+## 📁 Project Structure (Simplified)
+
+```id="fwgx6l"
+Data/
+Services/
+Tests/
+Web/
+ViewModels/
+GCommon/
+```
+
+---
+
+## 📌 Future Improvements
+
+* REST API integration
+* Performance optimizations
+* Advanced search (full-text search)
+* Cloud deployment (Azure/AWS)
+
+---
+
+
+---
+
+## 📄 License
+
+This project is for educational purposes.
