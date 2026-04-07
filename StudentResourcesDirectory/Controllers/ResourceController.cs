@@ -55,6 +55,7 @@ namespace StudentResourcesDirectory.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateResourceViewModel model)
         {
             if (!ModelState.IsValid)
@@ -102,7 +103,7 @@ namespace StudentResourcesDirectory.Controllers
 
 
         [HttpPost]
-        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateResourceViewModel model)
         {
             if (!ModelState.IsValid)

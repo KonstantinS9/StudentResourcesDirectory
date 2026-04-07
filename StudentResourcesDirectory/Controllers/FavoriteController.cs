@@ -32,6 +32,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(int resourceId)
         {
             var userId = _userManager.GetUserId(User)!;
@@ -40,6 +41,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Remove([FromRoute(Name = "id")]int resourceId)
         {
             var userId = _userManager.GetUserId(User)!;

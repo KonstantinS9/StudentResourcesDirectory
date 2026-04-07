@@ -43,6 +43,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(RatingAddViewModel viewModel, int id)
         {
             var userId = _userManager.GetUserId(User)!;
@@ -70,6 +71,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userId = _userManager.GetUserId(User)!;

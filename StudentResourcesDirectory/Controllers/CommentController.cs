@@ -33,6 +33,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(CommentAddViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -59,6 +60,7 @@ namespace StudentResourcesDirectory.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userId = _userManager.GetUserId(User);
